@@ -1,0 +1,12 @@
+Package: spoofeye-dbgsym
+Source: spoofeye
+Version: 1.0.0-1
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: Matéo Florian Callec <mateo@callec.net>
+Installed-Size: 127
+Depends: spoofeye (= 1.0.0-1)
+Section: debug
+Priority: optional
+Description: debug symbols for spoofeye
+Build-Ids: bdd60bdf48e2b08bd8fe66c481cb2ffbe1aaf303

@@ -1,0 +1,7 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+# Minimal debhelper-based rules file for building the Debian package
+
+# Default target: invoke debhelper for the requested action
+%:
+	dh $@

@@ -1,0 +1,11 @@
+Source: spoofeye
+Section: utils
+Priority: optional
+Maintainer: Matéo Florian Callec <mateo@callec.net>
+Build-Depends: debhelper-compat (= 12)
+Standards-Version: 4.5.0
+
+Package: spoofeye
+Architecture: amd64
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Network monitoring and spoofing detection tool

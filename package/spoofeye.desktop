@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=SpoofEye
+Comment=Network monitoring and spoofing detection tool
+Exec=/usr/bin/spoofeye
+Icon=/usr/share/pixmaps/spoofeye/icon-512x512.png
+Terminal=false
+Type=Application
+Categories=Utility;
+X-GNOME-Autostart-enabled=true
+OnlyShowIn=GNOME;Unity;XFCE;KDE;

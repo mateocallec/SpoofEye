@@ -1,0 +1,9 @@
+/var/log/spoofeye/*.log {
+    daily                           # Rotate logs every day
+    rotate 20                       # Keep 20 old log files before deleting
+    compress                        # Compress old log files to save space
+    missingok                       # Ignore missing log files
+    notifempty                      # Don’t rotate empty log files
+    create 0640 root adm            # Create new log file with permissions 640 and owner/group root:adm
+    sharedscripts                   # Run prerotate/postrotate scripts only once, not per log
+}

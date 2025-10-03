@@ -1,0 +1,9 @@
+./build/spoofeye
+./package/spoofeye.desktop
+./docs/img/icon-512x512.png
+./package/logrotate
+./resources/spoofeye.ini
+./resources/known_dns.json
+./debian/changelog
+./debian/README.Debian
+./debian/copyright

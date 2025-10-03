@@ -1,0 +1,15 @@
+#!/bin/sh
+set -e  # Exit immediately if a command fails
+
+# Only execute cleanup on purge (full removal of the package)
+case "$1" in
+    purge)
+        # Remove log directory and all log files
+        rm -rf /var/log/spoofeye
+
+        # Remove configuration files
+        rm -rf /etc/spoofeye
+        ;;
+esac
+
+exit 0

@@ -1,0 +1,64 @@
+SpoofEye for Debian
+===================
+
+SpoofEye is installed system-wide as the `spoofeye` command and integrates
+with systemd for automatic service management on Debian-based systems.
+
+Configuration
+-------------
+The default configuration files are located in:
+
+    /etc/spoofeye/
+
+- spoofeye.ini        Main configuration file
+- known_dns.json      List of trusted DNS resolvers
+
+You may override the configuration path at runtime using:
+
+    spoofeye --config-path /path/to/custom.ini
+
+Logs
+----
+All logs are written to:
+
+    /var/log/spoofeye/
+
+Log rotation is handled automatically by logrotate
+(`/etc/logrotate.d/spoofeye`).
+
+Systemd Service
+---------------
+The package installs a systemd unit file at:
+
+    /etc/systemd/system/spoofeye.service
+
+The service is automatically enabled at boot. You can manage it with:
+
+    systemctl start spoofeye
+    systemctl stop spoofeye
+    systemctl status spoofeye
+
+Desktop Integration
+-------------------
+A .desktop entry is provided at:
+
+    /usr/share/applications/spoofeye.desktop
+
+An application icon is installed at:
+
+    /usr/share/pixmaps/spoofeye.png
+
+This allows SpoofEye to appear in application menus and launchers.
+
+Upgrades and Removal
+--------------------
+- On upgrade, systemd is automatically reloaded and the service restarted.
+- On purge, all configuration and log files under `/etc/spoofeye/`
+  and `/var/log/spoofeye/` will be removed.
+
+More Information
+----------------
+For usage examples and full documentation, see the upstream README in
+/usr/share/doc/spoofeye/README.md or visit:
+
+    https://github.com/mateocallec/SpoofEye

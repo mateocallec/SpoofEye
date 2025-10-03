@@ -1,0 +1,50 @@
+# -------------------------------
+# Binaries
+# -------------------------------
+
+# Install the main executable
+build/spoofeye usr/bin/
+
+
+# -------------------------------
+# Desktop integration
+# -------------------------------
+
+# Install .desktop file for menu
+package/spoofeye.desktop usr/share/applications/
+
+# Install application icon
+docs/img/icon-512x512.png usr/share/pixmaps/spoofeye
+
+
+# -------------------------------
+# Log rotation
+# -------------------------------
+
+# Install logrotate configuration
+package/logrotate etc/logrotate.d/spoofeye
+
+
+# -------------------------------
+# Application configuration
+# -------------------------------
+
+# Default config file
+resources/spoofeye.ini etc/spoofeye/
+
+# Known DNS data
+resources/known_dns.json etc/spoofeye/
+
+
+# -------------------------------
+# Documentation
+# -------------------------------
+
+# Changelog
+debian/changelog usr/share/doc/spoofeye/
+
+# Debian documentation
+debian/README.Debian usr/share/doc/spoofeye/
+
+# License information
+debian/copyright usr/share/doc/spoofeye/

@@ -1,0 +1,89 @@
+#!/bin/sh
+set -e
+
+case "$1" in
+    configure)
+        # -----------------------------
+        # Optional: create system user/group (harmless if unused)
+        # -----------------------------
+        if ! id -u spoofeye >/dev/null 2>&1; then
+            adduser --system --group \
+                --home /var/lib/spoofeye \
+                --no-create-home \
+                --shell /usr/sbin/nologin \
+                spoofeye || true
+        fi
+
+        # -----------------------------
+        # /etc/spoofeye: ensure exists and is readable by all users (read-only)
+        # -----------------------------
+        install -d -m 755 -o root -g root /etc/spoofeye || true
+
+        # Remove dpkg leftover
+        rm -f /etc/spoofeye/spoofeye.ini.dpkg-old || true
+
+        # Config files: owned by root, readable by all
+        [ -f /etc/spoofeye/spoofeye.ini ] && chown root:root /etc/spoofeye/spoofeye.ini || true
+        [ -f /etc/spoofeye/spoofeye.ini ] && chmod 644 /etc/spoofeye/spoofeye.ini || true
+        [ -f /etc/spoofeye/known_dns.json ] && chown root:root /etc/spoofeye/known_dns.json || true
+        [ -f /etc/spoofeye/known_dns.json ] && chmod 644 /etc/spoofeye/known_dns.json || true
+
+        # -----------------------------
+        # /var/log/spoofeye: create log dir and a log file (root-owned, readable by adm)
+        # -----------------------------
+        install -d -m 750 -o root -g adm /var/log/spoofeye || true
+
+        if [ ! -f /var/log/spoofeye/spoofeye.log ]; then
+            touch /var/log/spoofeye/spoofeye.log || true
+        fi
+        chown root:adm /var/log/spoofeye/spoofeye.log || true
+        chmod 0640 /var/log/spoofeye/spoofeye.log || true
+
+        # -----------------------------
+        # If rsyslog is installed, write a rules file to route spoofeye syslog -> /var/log/spoofeye/spoofeye.log
+        # Otherwise, do nothing (journald will collect logs).
+        # -----------------------------
+        RSYS_CONF="/etc/rsyslog.d/50-spoofeye.conf"
+        # Detect rsyslog: check binary or systemd unit
+        if command -v rsyslogd >/dev/null 2>&1 || (command -v systemctl >/dev/null 2>&1 && systemctl list-unit-files --type=service 2>/dev/null | grep -q '^rsyslog.service'); then
+            # write rsyslog conf
+            cat > "$RSYS_CONF" <<'EOF' || true
+# Route messages from program "spoofeye" to a dedicated file
+:programname, isequal, "spoofeye" /var/log/spoofeye/spoofeye.log
+& stop
+EOF
+            chmod 644 "$RSYS_CONF" || true
+            chown root:root "$RSYS_CONF" || true
+
+            # If rsyslog is managed via systemd, try to reload it; otherwise try to SIGHUP the daemon
+            if command -v systemctl >/dev/null 2>&1 && systemctl list-unit-files --type=service 2>/dev/null | grep -q '^rsyslog.service'; then
+                # restart or reload rsyslog unit if available
+                systemctl try-restart rsyslog.service >/dev/null 2>&1 || systemctl restart rsyslog.service >/dev/null 2>&1 || true
+            else
+                # fallback: signal rsyslogd if running (non-fatal)
+                pkill -HUP rsyslogd 2>/dev/null || true
+            fi
+        else
+            # rsyslog not present: assume systemd-journald only; logs will be available in journalctl
+            : # no-op
+        fi
+
+        # -----------------------------
+        # Copy desktop file to /etc/xdg/autostart so it auto-starts for all GUI users
+        # -----------------------------
+        if [ -f /usr/share/applications/spoofeye.desktop ]; then
+            install -m 644 -o root -g root /usr/share/applications/spoofeye.desktop /etc/xdg/autostart/spoofeye.desktop || cp -f /usr/share/applications/spoofeye.desktop /etc/xdg/autostart/spoofeye.desktop || true
+        fi
+
+        # -----------------------------
+        # Give binary capability for packet capture (optional)
+        # -----------------------------
+        if command -v setcap >/dev/null 2>&1 && [ -f /usr/bin/spoofeye ]; then
+            setcap cap_net_raw,cap_net_admin=eip /usr/bin/spoofeye || true
+        fi
+
+        # End configure
+    ;;
+esac
+
+exit 0

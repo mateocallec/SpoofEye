@@ -1,0 +1,23 @@
+# ---------------------------
+# Binary files and builds
+# ---------------------------
+
+/build
+/outputs
+/venv
+/dist
+/debian/tmp
+/debian/spoofeye
+*.deb
+*.changes
+*.buildinfo
+/.spoofeye
+
+# ---------------------------
+# IDE
+# ---------------------------
+.vscode/
+.idea/
+*.iml
+*.sublime-workspace
+*.sublime-project
