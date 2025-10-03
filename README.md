@@ -1,5 +1,5 @@
 <div align="center">
-    <a href="https://github.com/mateocallec/SpoofEye"><img src="docs/img/logo-2048x2048.png" alt="SpoofEye" height="217" /></a>
+    <a href="https://github.com/mateocallec/SpoofEye"><img src="https://github.com/mateocallec/SpoofEye/blob/main/docs/img/icon-2048x2048.png?raw=true" alt="SpoofEye" height="217" /></a>
 </div>
 
 <div>&nbsp;</div>
