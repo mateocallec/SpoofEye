@@ -7,7 +7,7 @@
 <div align="center">
     <a href="https://github.com/mateocallec/SpoofEye/releases"><img src="https://img.shields.io/github/v/release/mateocallec/SpoofEye?label=lastest%20release&color=blue&style=flat-square" alt="Latest release" /></a>
     <a href="https://rojo.space/docs"><img src="https://img.shields.io/github/license/mateocallec/SpoofEye?label=license&color=white&style=flat-square" alt="License" /></a>
-    <a href="https://github.com/mateocallec/SpoofEye/releases"><img src="https://img.shields.io/badge/platform-Linux-darkred" alt="Supported platforms" /></a>
+    <a href="https://github.com/mateocallec/SpoofEye/releases"><img src="https://img.shields.io/badge/platform-Debian-darkred" alt="Supported platforms" /></a>
 </div>
 
 <hr />
